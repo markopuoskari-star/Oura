@@ -13,6 +13,12 @@ from .config import DB_PATH, TIMEZONE
 from .tables import TABLES, Table
 
 
+def one(con, sql: str, params=()):
+    """Hae yksi rivi ja tyhjennä tulos (DuckDB valittaa muuten keskeneräisestä tuloksesta)."""
+    rows = con.execute(sql, list(params)).fetchall()
+    return rows[0] if rows else None
+
+
 def connect(path: Path | str | None = None, read_only: bool = False) -> duckdb.DuckDBPyConnection:
     path = DB_PATH if path is None else path
     if path != ":memory:":
@@ -62,7 +68,7 @@ def upsert(con: duckdb.DuckDBPyConnection, table: Table, rows: Iterable[dict]) -
 
 # ------------------------------------------------------------------ synkkatila
 def get_last_synced(con, endpoint: str) -> date | None:
-    r = con.execute("SELECT last_day FROM sync_state WHERE endpoint=?", [endpoint]).fetchone()
+    r = one(con, "SELECT last_day FROM sync_state WHERE endpoint=?", [endpoint])
     return r[0] if r else None
 
 
@@ -82,9 +88,10 @@ def log_fetch(con, endpoint: str, start: date, end: date) -> None:
 def recently_fetched(con, endpoint: str, start: date, end: date, within: timedelta = timedelta(minutes=30)) -> bool:
     """Onko tätä (tai laajempaa) väliä yritetty hakea hiljattain? Estää API-kutsut joka työkalukutsulla
     silloin kun data puuttuu pysyvästi (esim. uni ennen kuin sormus on synkattu)."""
-    r = con.execute(
+    r = one(
+        con,
         "SELECT count(*) FROM fetch_log WHERE endpoint=? AND start_day<=? AND end_day>=? "
         "AND attempted_at > now() - ?::INTERVAL",
         [endpoint, start, end, f"{int(within.total_seconds())} seconds"],
-    ).fetchone()
+    )
     return r[0] > 0

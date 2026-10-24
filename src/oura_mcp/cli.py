@@ -19,11 +19,16 @@ def main(argv: list[str] | None = None) -> int:
     sp.add_argument("--to", dest="end", type=date.fromisoformat, help="loppupäivä (oletus: tänään)")
     sp.add_argument("--endpoints", nargs="*", help="rajaa endpointteihin, esim. daily_sleep sleep")
     sp.add_argument("--sandbox", action="store_true", help="käytä /v2/sandbox/-endpointteja")
+    sub.add_parser("serve", help="Käynnistä MCP-palvelin (stdio); Claude Desktop kutsuu tätä")
     args = p.parse_args(argv)
     try:
         if args.cmd == "auth":
             tokens = run_auth(Settings.load())
             print(f"Autentikointi onnistui. Scopet: {tokens['scope']}. Tokenit tallennettu avainnippuun.")
+        elif args.cmd == "serve":
+            from .server import run
+
+            run()
         elif args.cmd == "sync":
             from .db import connect
             from .sync import run_sync
