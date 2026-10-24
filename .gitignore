@@ -1,0 +1,13 @@
+.env
+.env.*
+!.env.example
+*.token
+tokens.json
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+*.duckdb
+*.duckdb.wal
+exports/
+dist/
