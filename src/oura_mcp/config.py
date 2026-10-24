@@ -10,7 +10,7 @@ from dotenv import load_dotenv
 API_BASE = "https://api.ouraring.com"
 AUTHORIZE_URL = "https://cloud.ouraring.com/oauth/authorize"
 TOKEN_URL = "https://api.ouraring.com/oauth/token"
-SCOPES = "personal daily heartrate workout tag session spo2 heart_health"
+SCOPES = "personal daily heartrate workout tag session spo2 heart_health stress ring_configuration"
 DEFAULT_REDIRECT_URI = "http://localhost:8080/callback"
 TIMEZONE = "Europe/Helsinki"
 

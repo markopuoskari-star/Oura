@@ -18,7 +18,7 @@ Personal access tokenit on poistettu käytöstä (12/2025), joten tarvitset OAut
 
 1. Mene osoitteeseen <https://cloud.ouraring.com/oauth/applications> ja luo uusi sovellus.
 2. **Redirect URI:** `http://localhost:8080/callback` (täsmälleen tämä).
-3. **Scopet:** `personal daily heartrate workout tag session spo2 heart_health`.
+3. **Scopet:** `personal daily heartrate workout tag session spo2 heart_health stress ring_configuration`.
 4. Kopioi client ID ja client secret.
 
 ```bash

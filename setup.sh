@@ -23,7 +23,7 @@ else
   echo ">> Täytä OURA_CLIENT_ID ja OURA_CLIENT_SECRET tiedostoon: $ENV_FILE"
   echo "   (OAuth-sovellus: https://cloud.ouraring.com/oauth/applications"
   echo "    Redirect URI: http://localhost:8080/callback"
-  echo "    Scopet: personal daily heartrate workout tag session spo2 heart_health)"
+  echo "    Scopet: personal daily heartrate workout tag session spo2 heart_health stress ring_configuration)"
 fi
 
 cat <<JSON

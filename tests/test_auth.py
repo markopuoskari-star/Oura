@@ -19,7 +19,7 @@ def token_json(access="A", refresh="R", expires_in=86400):
 def test_authorize_url_has_all_scopes():
     q = parse_qs(urlparse(auth.build_authorize_url(S, "st")).query)
     assert q["client_id"] == ["cid"] and q["state"] == ["st"]
-    assert set(q["scope"][0].split()) == {"personal", "daily", "heartrate", "workout", "tag", "session", "spo2", "heart_health"}
+    assert set(q["scope"][0].split()) == {"personal", "daily", "heartrate", "workout", "tag", "session", "spo2", "heart_health", "stress", "ring_configuration"}
 
 
 def test_full_flow_saves_tokens_to_keyring(memory_keyring):
